@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wishlist</title>
+
+    <style>
+        body { font-family: Arial; background:#f4f6f9; }
+
+        .container {
+            width: 70%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .remove {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>❤️ Your Wishlist</h2>
+
+{% if products %}
+    {% for product in products %}
+    <div class="item">
+
+        <div>
+            <h3>{{ product.name }}</h3>
+            <p>₹{{ product.price }}</p>
+        </div>
+
+        <div>
+            <a href="{% url 'add_to_cart' product.id %}" class="btn">Add to Cart</a>
+            <a href="{% url 'remove_from_wishlist' product.id %}" class="btn remove">Remove</a>
+        </div>
+
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No items in wishlist</p>
+{% endif %}
+
+<br>
+<a href="/">⬅ Back to Store</a>
+
+</div>
+
+</body>
+</html>

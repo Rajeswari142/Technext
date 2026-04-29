@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            display: flex;
+            gap: 30px;
+        }
+
+        .form-box, .summary-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-box {
+            flex: 2;
+        }
+
+        .summary-box {
+            flex: 1;
+            height: fit-content;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #219150;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total {
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 18px;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 🧾 LEFT: FORM -->
+    <div class="form-box">
+        <h2>💳 Checkout</h2>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <input type="text" name="name" placeholder="Full Name">
+            <input type="email" name="email" placeholder="Email Address">
+
+            <button type="submit">Place Order</button>
+        </form>
+
+        <br>
+        <a href="{% url 'view_cart' %}">⬅ Back to Cart</a>
+    </div>
+
+
+    <!-- 🛒 RIGHT: ORDER SUMMARY -->
+    <div class="summary-box">
+        <h2>🛒 Order Summary</h2>
+
+        {% for item in cart_items %}
+            <div class="item">
+                <span>{{ item.product.name }} (x{{ item.quantity }})</span>
+                <span>₹{{ item.subtotal }}</span>
+            </div>
+        {% endfor %}
+
+        <div class="total">
+            Total: ₹{{ total }}
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

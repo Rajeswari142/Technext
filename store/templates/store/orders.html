@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orders</title>
+</head>
+<body>
+
+<h1>All Orders</h1>
+
+<ul>
+    {% for order in orders %}
+        <li>
+            {{ order.customer_name }} - {{ order.product.name }}
+        </li>
+    {% empty %}
+        <li>No orders found</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

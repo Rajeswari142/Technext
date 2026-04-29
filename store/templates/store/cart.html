@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+
+    <style>
+        body { font-family: Arial; background:#f4f6f9; }
+
+        .container {
+            width: 70%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .controls a {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .remove {
+            background: red;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .checkout {
+            display: block;
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🛒 Your Cart</h2>
+
+{% if cart_items %}
+    {% for item in cart_items %}
+    <div class="item">
+
+        <div>
+            <h3>{{ item.product.name }}</h3>
+            <p>₹{{ item.product.price }}</p>
+        </div>
+
+        <div class="controls">
+            <a href="{% url 'decrease_quantity' item.product.id %}">➖</a>
+            <strong>{{ item.quantity }}</strong>
+            <a href="{% url 'increase_quantity' item.product.id %}">➕</a>
+            <a href="{% url 'remove_from_cart' item.product.id %}" class="remove">❌</a>
+        </div>
+
+        <div>
+            ₹{{ item.subtotal }}
+        </div>
+
+    </div>
+    {% endfor %}
+
+    <div class="total">
+        Total: ₹{{ total }}
+    </div>
+
+    <div class="checkout">
+        <a href="{% url 'checkout' %}">Proceed to Checkout</a>
+    </div>
+
+{% else %}
+    <p>Your cart is empty</p>
+{% endif %}
+
+</div>
+
+</body>
+</html>
